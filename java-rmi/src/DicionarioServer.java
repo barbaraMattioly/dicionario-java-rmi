@@ -4,8 +4,8 @@ public class DicionarioServer {
 
 	public DicionarioServer() {
 		try {
-			Dicionario c = new DicionarioServant();
-			Naming.rebind("rmi://localhost/DicionarioService", c);
+			Dicionario d = new DicionarioServant();
+			Naming.rebind("rmi://localhost/DicionarioService", d);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
