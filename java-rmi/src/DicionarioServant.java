@@ -3,8 +3,7 @@ import java.util.ArrayList;
 public class DicionarioServant extends java.rmi.server.UnicastRemoteObject implements Dicionario {
  
 	private static final long serialVersionUID = 1L;
-	private int cont = 0;
-
+	
     private ArrayList<String> palavras = new ArrayList<String>();
     private ArrayList<String> significados = new ArrayList<String>();
 
