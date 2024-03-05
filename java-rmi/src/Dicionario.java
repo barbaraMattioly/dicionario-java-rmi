@@ -3,11 +3,10 @@ import java.rmi.RemoteException;
 
 public interface Dicionario extends Remote {
 
-	public double somar(double a, double b) throws RemoteException;
+	public String consultar(String palavra) throws java.rmi.RemoteException;
 
-	public double subtrair(double a, double b) throws RemoteException;
+    public void adicionar(String palavra, String significado) throws java.rmi.RemoteException;
 
-	public double multiplicar(double a, double b) throws RemoteException;
+    public void remover(String palavra) throws java.rmi.RemoteException;
 
-	public double dividir(double a, double b) throws RemoteException;
 }
