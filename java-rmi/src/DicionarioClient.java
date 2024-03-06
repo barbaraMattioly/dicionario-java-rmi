@@ -91,10 +91,10 @@ public class DicionarioClient {
 		System.out.print("Digite a palavra: ");
 		palavra = System.console().readLine();
 
-		System.out.print("\nDigite o significado: ");
+		System.out.print("Digite o significado: ");
 		significado = System.console().readLine();
 
-		d.adicionar(palavra, significado);
+		System.out.println(d.adicionar(palavra, significado));
 	}
 
 	private static void removerPalavra() throws RemoteException {
@@ -103,7 +103,7 @@ public class DicionarioClient {
 		System.out.print("Digite a palavra: ");
 		palavra = System.console().readLine();
 
-		d.remover(palavra);
+		System.out.println(d.remover(palavra));
 	}
 
 	private static void limparTela() {
