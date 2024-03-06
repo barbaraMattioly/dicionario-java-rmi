@@ -32,7 +32,7 @@ public class DicionarioServant extends java.rmi.server.UnicastRemoteObject imple
                 String[] linhaAtual = linha.split(",");
 
                 if (linhaAtual.length == 2 && linhaAtual[0].equals(palavra)) {
-                    return palavra + ": " + linhaAtual[1];
+                    return linhaAtual[1];
                 }
             }
             return "Palavra não encontrada.";
@@ -75,40 +75,6 @@ public class DicionarioServant extends java.rmi.server.UnicastRemoteObject imple
     }
 
    
-
-    //remover antigo
-    /*
-    public String remover(String palavra) throws java.rmi.RemoteException {
-        String caminhoArquivo = "../src/arquivos/Dicionario.csv";
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(caminhoArquivo)); //Faz a leitura do arquivo
-                BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo + ".tmp"))) { //Cria um arquivo temporário para escrita
-
-            String linha;
-            while ((linha = reader.readLine()) != null) { //Lê cada linha do arquivo
-                         
-                String[] linhaAtual = linha.split(","); //Separa a linha em um array de strings
-
-                if (linhaAtual.length == 2 && linhaAtual[0].equals(palavra)) { //Se a palavra for encontrada
-                    continue; // Pula a linha que contém a palavra a ser removida do arquivo
-                }
-
-                writer.write(linha + "\n"); //Escreve a linha no arquivo temporário
-            }
-        } catch (IOException e) {
-            System.out.println("Erro ao remover palavra do arquivo: " + e.getMessage());
-        }
-
-        try {
-            Files.move(Paths.get(caminhoArquivo + ".tmp"), Paths.get(caminhoArquivo), //Renomeia o arquivo temporário para o nome original
-                    StandardCopyOption.REPLACE_EXISTING);
-            return "Sucesso";
-        } catch (IOException e) {
-            System.out.println("Erro ao renomear arquivo temporário: " + e.getMessage());
-        }
-        return ""; //ajustar
-    }*/
-
     
     /**
      * Método para remover uma palavra do dicionário
@@ -122,6 +88,8 @@ public class DicionarioServant extends java.rmi.server.UnicastRemoteObject imple
                 BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo + ".tmp"))) {
     
             String linha;
+            Boolean palavraEncontrada = false;
+
             while ((linha = reader.readLine()) != null) {
                 // Verifica se a linha está vazia ou contém apenas espaços em branco
                 if (linha.trim().isEmpty()) {
@@ -131,10 +99,15 @@ public class DicionarioServant extends java.rmi.server.UnicastRemoteObject imple
                 String[] linhaAtual = linha.split(",");
     
                 if (linhaAtual.length == 2 && linhaAtual[0].equals(palavra)) {
+                    palavraEncontrada = true;
                     continue; // Pula a linha que contém a palavra a ser removida
                 }
     
                 writer.write(linha + "\n"); // Escreve a linha no arquivo temporário
+            }
+
+            if (!palavraEncontrada) {
+                return "Palavra não encontrada.";
             }
         } catch (IOException e) {
             System.out.println("Erro ao remover palavra do arquivo: " + e.getMessage());
@@ -153,7 +126,7 @@ public class DicionarioServant extends java.rmi.server.UnicastRemoteObject imple
 
 
     /**
-     * Método para verificar se a palavra já existe no dicionário antes te inserí-la
+     * Método para verificar se a palavra já existe no dicionário, antes te inserí-la.
      * @param palavra
      * @param caminhoArquivo
      * @return
