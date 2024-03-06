@@ -10,13 +10,14 @@ import java.rmi.NotBoundException;
 public class DicionarioClient {
 	private static Dicionario d;
 	public static void main(String[] args) {
-		String servidor = "rmi://localhost/";
-		String nome = "DicionarioService";
+		
+		String servidor = "rmi://localhost/"; //servidor
+		String nome = "DicionarioService"; //nome do objeto remoto
 		try {
-			d = (Dicionario) Naming.lookup(servidor + nome);
-			System.out.println("Objeto remoto \'" + nome + "\' encontrado no servidor.");
+			d = (Dicionario) Naming.lookup(servidor + nome); //busca o objeto remoto no servidor
+			System.out.println("Objeto remoto \'" + nome + "\' encontrado no servidor."); //mensagem de sucesso
 
-			opcoesMenu();
+			opcoesMenu(); 
 
 		} catch (MalformedURLException e) {
 			System.out.println("URL \'" + servidor + nome + "\' mal formatada.");
@@ -32,11 +33,13 @@ public class DicionarioClient {
 
 	}
 
+	//Método para exibir menu de opções
 	private static void exibirMenu() {
+				
 		String nomeArquivo = "./java-rmi/src/arquivos/Menu.txt";
 
 		try {
-			List<String> linhas = Files.readAllLines(Paths.get(nomeArquivo));
+			List<String> linhas = Files.readAllLines(Paths.get(nomeArquivo)); //lê as linhas do arquivo criado para o menu
 
 			for (String linha : linhas) {
 				System.out.println(linha);
@@ -46,7 +49,8 @@ public class DicionarioClient {
 		}
 	}
 
-	private static void opcoesMenu() throws RemoteException {
+	//Construção do menu
+	private static void opcoesMenu() throws IOException {
 		int opcao = 0;
 		do {
 			exibirMenu();
@@ -76,41 +80,61 @@ public class DicionarioClient {
 		} while (opcao != 4);
 	}
 
+	//Método que consulta o significado de uma palavra no dicionário
 	private static void consultarSignificado() throws RemoteException {
-		String palavra;
-
-		System.out.print("Digite a palavra: ");
-		palavra = System.console().readLine();
-
-		System.out.println(d.consultar(palavra));
+		try{
+			String palavra;
+	
+			System.out.print("Digite a palavra: ");
+			palavra = System.console().readLine();
+	
+			System.out.println(d.consultar(palavra));
+		} catch (RemoteException e) {
+			System.out.println("Erro na invocacao remota.");
+			e.printStackTrace();
+		}
 	}
 
+	//Método que adiciona uma palavra ao dicionário
 	private static void adicionarPalavra() throws RemoteException {
-		String palavra, significado;
-
-		System.out.print("Digite a palavra: ");
-		palavra = System.console().readLine();
-
-		System.out.print("Digite o significado: ");
-		significado = System.console().readLine();
-
-		System.out.println(d.adicionar(palavra, significado));
+		try{
+			String palavra, significado;
+	
+			System.out.print("Digite a palavra: ");
+			palavra = System.console().readLine();
+	
+			System.out.print("Digite o significado: ");
+			significado = System.console().readLine();
+	
+			System.out.println(d.adicionar(palavra, significado));
+		}catch (RemoteException e) {
+			System.out.println("Erro na invocacao remota.");
+			e.printStackTrace();
+		}
 	}
 
-	private static void removerPalavra() throws RemoteException {
-		String palavra;
-
-		System.out.print("Digite a palavra: ");
-		palavra = System.console().readLine();
-
-		System.out.println(d.remover(palavra));
+	//Método que remove uma palavra do dicionário
+	private static void removerPalavra() throws IOException {
+		try{
+			String palavra;
+	
+			System.out.print("Digite a palavra: ");
+			palavra = System.console().readLine();
+	
+			System.out.println(d.remover(palavra));
+		}catch (RemoteException e) {
+			System.out.println("Erro na invocacao remota.");
+			e.printStackTrace();
+		}
 	}
 
+	//Método para limpar a tela ao rodar o programa
 	private static void limparTela() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 
+	//Método para pausar a execução do programa
 	private static void pausa() {
 		System.out.println("Enter para continuar.");
 		System.console().readLine();
