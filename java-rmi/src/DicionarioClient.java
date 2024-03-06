@@ -11,8 +11,15 @@ public class DicionarioClient {
 	private static Dicionario d;
 	public static void main(String[] args) {
 
-		String servidor = "rmi://localhost/"; //servidor
-		String nome = "DicionarioService"; //nome do objeto remoto
+		String enderecoServidor = "localhost";
+
+		if(args != null && args.length > 0){
+			enderecoServidor = args[0];
+		}
+
+		String servidor = "rmi://" + enderecoServidor; //servidor
+		String nome = "/DicionarioService"; //nome do objeto remoto
+		
 		try {
 			d = (Dicionario) Naming.lookup(servidor + nome); //busca o objeto remoto no servidor
 			System.out.println("Objeto remoto \'" + nome + "\' encontrado no servidor."); //mensagem de sucesso
