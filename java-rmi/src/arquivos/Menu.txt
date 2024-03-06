@@ -1,0 +1,6 @@
+=============================================
+| 1. Consultar o significado de uma palavra |
+| 2. Adicionar nova palavra                 |
+| 3. Remover palavra                        |
+| 4. Sair                                   |
+=============================================
